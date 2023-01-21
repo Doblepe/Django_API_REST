@@ -1,11 +1,12 @@
 from django.shortcuts import render
 # TODO: importar login requerido
+from django.contrib.auth.decorators import login_required
 # TODO: importar el formulario
 # TODO: importar login
 # TODO: importar reverse y redirect
 
 
-# TODO: Añadir que la autentificación es obligatoria para acceder
+@login_required
 def home(request):
     return render(request,
                   'home.html',

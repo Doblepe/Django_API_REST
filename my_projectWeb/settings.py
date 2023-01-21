@@ -59,7 +59,7 @@ MIDDLEWARE = [
 ROOT_URLCONF = 'my_projectWeb.urls'
 
 LOGIN_REDIRECT_URL = 'home'
-LOGOUT_REDIRECT_URL = "home"
+#LOGOUT_REDIRECT_URL = "home"
 
 TEMPLATES = [
     {

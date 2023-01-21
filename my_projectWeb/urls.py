@@ -14,14 +14,15 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.urls import path
-# Incluir la aplicacion al proyecto
-from django.conf.urls import include, url
+from django.contrib import admin
+from django.urls import include, re_path
 # Convocar a las ulrs de las settings
 from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
-    url(r"^", include("myApp.urls")),
-    # TODO: nombrar las url de admin
+    re_path(r"^", include("myApp.urls")),
+    path("admin/", admin.site.urls),
     # TODO: nombrar la url de traducción
-] + static(settings.STATIC_URL, document_root=settings.STATICFILES_DIRS)+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+] + static(settings.STATIC_URL, document_root=settings.STATICFILES_DIRS)+\
+    static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -23,8 +23,8 @@
                     </tr>
                     <tr>
                         <!--TODO: Añadir las urls para activar el login y contraseña-->
-                        <td><a href="#">Logout</a><td>
-                        <td><a href="#">Change password</a></td>
+                        <td><a href="{% url 'logout' %}">Logout</a><td>
+                        <td><a href="{% url 'password_change' %}">Change password</a></td>
                     </tr>
                 {% else %}
                     <tr>
@@ -32,7 +32,7 @@
                     </tr>
                     <tr>
                         <!--TODO: Añadir las urls para activar el login-->
-                      <td><a href="#">Login</a></td>
+                      <td><a href="{% url 'login' %}"></a>>Login</a></td>
                     </tr>
                 {% endif %}
             </tbody>
@@ -43,7 +43,7 @@
                     {% block sidebar %}
                         <!--TODO: Añadir las urls para activar el menú-->
                         <ul class="sidebar-nav" style="margin-top: 20px;">
-                            <li><a href="#">Home</a></li>
+                            <li><a href="{%url 'home'%}">Home</a></li>
                             <li><a href="#">Iris Data</a></li>
                             <li><a href="#">Insert Data</a></li>
                             <li><a href="#">Update Data</a></li>
