@@ -1,26 +1,63 @@
 from rest_framework.decorators import api_view
-# TODO: importar status
-# TODO: render y redirect
-# TODO: importar settings
-# TODO: importar pandas, csv y json
+from rest_framework import status
+from django.shortcuts import render, redirect
+from django.conf import settings
+import pandas as pd
+import csv
+import json
+from myApp.serializer import irisSerializer
+from rest_framework.response import Response
+
 # TODO: importar Response
 
 
 @api_view(['GET'])
 def irisData(request):
     if request.method == 'GET':
-        # TODO: mostrar los datos de Iris dataset
-        pass
+        csv = settings.MEDIA_ROOT + '/iris.csv'
+        csv = "/home/victorperez/Escritorio/Aplicaciones/Django_API_REST/my_projectWeb/media/iris.csv"
+        df = pd.read_csv(csv)
+        data = df.to_json(orient="index")
+        data = json.loads(data)
+        describe = df.describe().to_json(orient="index")
+        describe = json.loads(describe)
+        return render(request, "iris/main.html",
+        context= {"data" : data, "describe":describe
+        }, status= status.HTTP_200_OK)
+
 
 
 @api_view(['GET', 'POST'])
 def insertData(request):
+    result = ''
     if request.method == 'GET':
-        # TODO: mostrar la plantilla insert.html
-        pass
+        return render(request, "iris/insert.html")
     elif request.method == 'POST':
-        # TODO: insertar el dato al final del csv usando la librería csv
-        pass
+       data = request.data
+       print(data)
+       serializer = irisSerializer(data=data)
+    if serializer.is_valid():
+ # Guardamos los datos:
+        serializer.save()
+ # insertar dato en csv:
+        X = settings.MEDIA_ROOT + '/iris.csv'
+        with open(X, 'a', newline='') as csvfile:
+            fieldnames = ['sepal_length', 'sepal_width',
+            'petal_length', 'petal_width', 'species']
+            writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+            writer.writerow({'sepal_length': data['sepal_length'],
+                'sepal_width': data['sepal_width'],
+                'petal_length': data['petal_length'],
+                    'petal_width': data['petal_width'],
+                 'species': data['species']})
+            print("writing complete")
+ # resultado que nos muestre si se ha insertado:
+            result = 'Insertado correctamente'
+        return render(request, 'iris/insert.html',
+                context={'result': result}, status=status.HTTP_201_CREATED)
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)   
+        
+## 57,40
 
 
 @api_view(['GET', 'PUT', 'POST'])

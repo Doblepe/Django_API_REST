@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     # Añadidos:
-    # TODO: Añadir la libreria rest_framework
+    'rest_framework',
     'myApp',
 ]
 
@@ -136,7 +136,7 @@ STATIC_URL = '/static/'
 
 # Absolute filesystem path to the directory that will hold user-uploaded files.
 # Example: "/home/username/folferProjects/projectname/media"
-MEDIA_ROOT = os.path.join(os.path.expanduser("~/atom/my_django_web/my_projectWeb"),"media")
+MEDIA_ROOT = os.path.join(os.path.expanduser("~/Escritorio/Aplicaciones/Django_API_REST/my_projectWeb"),"media")
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use
 # a trailing slash.

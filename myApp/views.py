@@ -1,9 +1,8 @@
-from django.shortcuts import render
-# TODO: importar login requerido
+from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-# TODO: importar el formulario
-# TODO: importar login
-# TODO: importar reverse y redirect
+from myApp.form import CustomUserCreationForm
+from django.contrib.auth import login
+from django.urls import reverse
 
 
 @login_required
@@ -17,8 +16,12 @@ def home(request):
 
 def register(request):
     if request.method == "GET":
-        # TODO: pasar el formulario a la plantilla de registro
-        pass
+        return render(request, "registration/register.html", 
+        {"form": CustomUserCreationForm})    
     elif request.method == "POST":
-        # TODO: Guardar el usuario siguiendo el formulario
-        pass
+        form = CustomUserCreationForm(request.POST)
+        if form.is_valid:
+            user = form.save()
+            login(request, user)
+            return redirect(reverse("home"))
+    
